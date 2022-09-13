@@ -5,7 +5,7 @@ use lab_01::damerau_levenshtein;
 use lab_01::DamerauLevenshtein;
 
 /// Замерить среднее время поиска расстояния Дамерау-Левенштейна
-fn benchmark<I: DamerauLevenshtein>(len: usize) -> std::time::Duration {
+fn benchmark<I: DamerauLevenshtein>(len: usize, times: usize) -> std::time::Duration {
     // Генератор случайных чисел
     let mut rng = rand::thread_rng();
 
@@ -16,11 +16,11 @@ fn benchmark<I: DamerauLevenshtein>(len: usize) -> std::time::Duration {
     // Начинаем замер процессорного времени
     let start = cpu_time::ProcessTime::now();
 
-    for _ in 0..1000 {
+    for _ in 0..times {
         <I>::distance(&lhs, &rhs);
     }
 
-    start.elapsed() / 1000
+    start.elapsed() / times as u32
 }
 
 fn main() {
@@ -34,17 +34,17 @@ fn main() {
 
         print!(
             "{:>13}\t",
-            benchmark::<damerau_levenshtein::Iterative>(len).as_nanos()
+            benchmark::<damerau_levenshtein::Iterative>(len, 90).as_nanos()
         );
 
         print!(
             "{:>13}\t",
-            benchmark::<damerau_levenshtein::Recursive>(len).as_nanos()
+            benchmark::<damerau_levenshtein::Recursive>(len, 10).as_nanos()
         );
 
         print!(
             "{:>13}\n",
-            benchmark::<damerau_levenshtein::Memoizing>(len).as_nanos()
+            benchmark::<damerau_levenshtein::Memoizing>(len, 90).as_nanos()
         );
     }
 }
