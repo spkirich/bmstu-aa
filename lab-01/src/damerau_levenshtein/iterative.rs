@@ -1,44 +1,41 @@
-//! Итеративная реализация
-
-use crate::DamerauLevenshtein;
+use super::DamerauLevenshtein;
 use crate::Matrix;
 
+/// Итеративно
 pub struct Iterative;
 
 impl DamerauLevenshtein for Iterative {
     /// Расстояние Дамерау-Левенштейна
     ///
-    /// Примеры:
-    ///
     /// ```
-    /// use lab_01::damerau_levenshtein::{DamerauLevenshtein, Iterative};
+    /// use lab_01::{damerau_levenshtein, DamerauLevenshtein};
     ///
     /// // Обе строки пустые
-    /// assert_eq!(Iterative::distance("", ""), 0);
+    /// assert_eq!(damerau_levenshtein::Iterative::distance("", ""), 0);
     ///
     /// // Только первая строка пустая
-    /// assert_eq!(Iterative::distance("", "right"), 5);
+    /// assert_eq!(damerau_levenshtein::Iterative::distance("", "right"), 5);
     ///
     /// // Только вторая строка пустая
-    /// assert_eq!(Iterative::distance("left", ""), 4);
+    /// assert_eq!(damerau_levenshtein::Iterative::distance("left", ""), 4);
     ///
     /// // Требуется одна вставка
-    /// assert_eq!(Iterative::distance("word", "world"), 1);
+    /// assert_eq!(damerau_levenshtein::Iterative::distance("word", "world"), 1);
     ///
     /// // Требуется одно удаление
-    /// assert_eq!(Iterative::distance("clock", "lock"), 1);
+    /// assert_eq!(damerau_levenshtein::Iterative::distance("clock", "lock"), 1);
     ///
     /// // Требуется одна замена
-    /// assert_eq!(Iterative::distance("ping", "pong"), 1);
+    /// assert_eq!(damerau_levenshtein::Iterative::distance("ping", "pong"), 1);
     ///
     /// // Требуется одна перестановка
-    /// assert_eq!(Iterative::distance("vse", "sve"), 1);
+    /// assert_eq!(damerau_levenshtein::Iterative::distance("vse", "sve"), 1);
     ///
     /// // Строки совпадают
-    /// assert_eq!(Iterative::distance("zug", "zug"), 0);
+    /// assert_eq!(damerau_levenshtein::Iterative::distance("zug", "zug"), 0);
     ///
     /// // Строки различаются
-    /// assert_eq!(Iterative::distance("heaven", "hell"), 4);
+    /// assert_eq!(damerau_levenshtein::Iterative::distance("heaven", "hell"), 4);
     /// ```
 
     fn distance(s: &str, t: &str) -> usize {
@@ -64,11 +61,10 @@ impl DamerauLevenshtein for Iterative {
                 let c = s.chars().nth(i - 1).unwrap();
                 let d = t.chars().nth(j - 1).unwrap();
 
-                let mut cases = vec![
-                    matrix.get(i - 1, j) + 1,
-                    matrix.get(i, j - 1) + 1,
-                    matrix.get(i - 1, j - 1) + if c == d { 0 } else { 1 },
-                ];
+                let mut cases = vec![matrix.get(i - 1, j - 1) + if c == d { 0 } else { 1 }];
+
+                cases.push(matrix.get(i - 1, j) + 1);
+                cases.push(matrix.get(i, j - 1) + 1);
 
                 if i > 1 && j > 1 {
                     // Предыдущие символы данных строк

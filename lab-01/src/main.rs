@@ -2,7 +2,7 @@ use rand::distributions::Alphanumeric;
 use rand::distributions::DistString;
 
 use lab_01::damerau_levenshtein;
-use lab_01::damerau_levenshtein::DamerauLevenshtein;
+use lab_01::DamerauLevenshtein;
 
 /// Замерить среднее время поиска расстояния Дамерау-Левенштейна
 fn benchmark<I: DamerauLevenshtein>(len: usize) -> std::time::Duration {

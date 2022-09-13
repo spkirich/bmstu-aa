@@ -1,9 +1,10 @@
-//! Поиск расстояния Левенштейна
+//! Поиск простого расстояния Левенштейна
+
+pub use iterative::Iterative;
 
 pub trait VanillaLevenshtein {
-    /// Расстояние Левенштейна
+    /// Простое расстояние Левенштейна
     fn distance(s: &str, t: &str) -> usize;
 }
 
-pub mod iterative;
-pub use iterative::Iterative;
+mod iterative;

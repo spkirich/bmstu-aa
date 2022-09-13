@@ -1,47 +1,44 @@
-//! Мемоизирующая реализация
-
-use crate::DamerauLevenshtein;
+use super::DamerauLevenshtein;
 use crate::Matrix;
 
 /// Кэш найденных расстояний
 type Cache = Matrix<Option<usize>>;
 
+/// С мемоизацией
 pub struct Memoizing;
 
 impl DamerauLevenshtein for Memoizing {
     /// Расстояние Дамерау-Левенштейна
     ///
-    /// Примеры:
-    ///
     /// ```
-    /// use lab_01::damerau_levenshtein::{DamerauLevenshtein, Memoizing};
+    /// use lab_01::{damerau_levenshtein, DamerauLevenshtein};
     ///
     /// // Обе строки пустые
-    /// assert_eq!(Memoizing::distance("", ""), 0);
+    /// assert_eq!(damerau_levenshtein::Memoizing::distance("", ""), 0);
     ///
     /// // Только первая строка пустая
-    /// assert_eq!(Memoizing::distance("", "right"), 5);
+    /// assert_eq!(damerau_levenshtein::Memoizing::distance("", "right"), 5);
     ///
     /// // Только вторая строка пустая
-    /// assert_eq!(Memoizing::distance("left", ""), 4);
+    /// assert_eq!(damerau_levenshtein::Memoizing::distance("left", ""), 4);
     ///
     /// // Требуется одна вставка
-    /// assert_eq!(Memoizing::distance("word", "world"), 1);
+    /// assert_eq!(damerau_levenshtein::Memoizing::distance("word", "world"), 1);
     ///
     /// // Требуется одно удаление
-    /// assert_eq!(Memoizing::distance("clock", "lock"), 1);
+    /// assert_eq!(damerau_levenshtein::Memoizing::distance("clock", "lock"), 1);
     ///
     /// // Требуется одна замена
-    /// assert_eq!(Memoizing::distance("ping", "pong"), 1);
+    /// assert_eq!(damerau_levenshtein::Memoizing::distance("ping", "pong"), 1);
     ///
     /// // Требуется одна перестановка
-    /// assert_eq!(Memoizing::distance("vse", "sve"), 1);
+    /// assert_eq!(damerau_levenshtein::Memoizing::distance("vse", "sve"), 1);
     ///
     /// // Строки совпадают
-    /// assert_eq!(Memoizing::distance("zug", "zug"), 0);
+    /// assert_eq!(damerau_levenshtein::Memoizing::distance("zug", "zug"), 0);
     ///
     /// // Строки различаются
-    /// assert_eq!(Memoizing::distance("heaven", "hell"), 4);
+    /// assert_eq!(damerau_levenshtein::Memoizing::distance("heaven", "hell"), 4);
     /// ```
 
     fn distance(s: &str, t: &str) -> usize {
@@ -76,11 +73,10 @@ fn helper(s: &str, t: &str, cache: &mut Cache) -> usize {
     let c = s.chars().nth(m - 1).unwrap();
     let d = t.chars().nth(n - 1).unwrap();
 
-    let mut cases = vec![
-        helper(&s[0..m - 1], t, cache) + 1,
-        helper(s, &t[0..n - 1], cache) + 1,
-        helper(&s[0..m - 1], &t[0..n - 1], cache) + if c == d { 0 } else { 1 },
-    ];
+    let mut cases = vec![helper(&s[..m - 1], &t[..n - 1], cache) + if c == d { 0 } else { 1 }];
+
+    cases.push(helper(&s[..m - 1], t, cache) + 1);
+    cases.push(helper(s, &t[..n - 1], cache) + 1);
 
     if m > 1 && n > 1 {
         // Предпоследние символы данных строк
