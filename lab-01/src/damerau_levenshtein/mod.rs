@@ -1,7 +1,6 @@
 //! Поиск расстояния Дамерау-Левенштейна
 
 pub trait DamerauLevenshtein {
-
     /// Расстояние Дамерау-Левенштейна
     fn distance(s: &str, t: &str) -> usize;
 }

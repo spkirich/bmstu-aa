@@ -6,7 +6,6 @@ use lab_01::damerau_levenshtein::DamerauLevenshtein;
 
 /// Замерить среднее время поиска расстояния Дамерау-Левенштейна
 fn benchmark<I: DamerauLevenshtein>(len: usize) -> std::time::Duration {
-
     // Генератор случайных чисел
     let mut rng = rand::thread_rng();
 
@@ -17,7 +16,7 @@ fn benchmark<I: DamerauLevenshtein>(len: usize) -> std::time::Duration {
     // Начинаем замер процессорного времени
     let start = cpu_time::ProcessTime::now();
 
-    for _ in 0 .. 1000 {
+    for _ in 0..1000 {
         <I>::distance(&lhs, &rhs);
     }
 
@@ -25,23 +24,27 @@ fn benchmark<I: DamerauLevenshtein>(len: usize) -> std::time::Duration {
 }
 
 fn main() {
-
     print!("{:<13}\t", "String length");
     print!("{:<13}\t", "Iterative, ns");
     print!("{:<13}\t", "Recursive, ns");
     print!("{:<13}\n", "Memoizing, ns");
 
-    for len in 0 .. 10 {
-
+    for len in 0..10 {
         print!("{:>13}\t", len);
 
-        print!("{:>13}\t",
-            benchmark::<damerau_levenshtein::Iterative>(len).as_nanos());
+        print!(
+            "{:>13}\t",
+            benchmark::<damerau_levenshtein::Iterative>(len).as_nanos()
+        );
 
-        print!("{:>13}\t",
-            benchmark::<damerau_levenshtein::Recursive>(len).as_nanos());
+        print!(
+            "{:>13}\t",
+            benchmark::<damerau_levenshtein::Recursive>(len).as_nanos()
+        );
 
-        print!("{:>13}\n",
-            benchmark::<damerau_levenshtein::Memoizing>(len).as_nanos());
+        print!(
+            "{:>13}\n",
+            benchmark::<damerau_levenshtein::Memoizing>(len).as_nanos()
+        );
     }
 }

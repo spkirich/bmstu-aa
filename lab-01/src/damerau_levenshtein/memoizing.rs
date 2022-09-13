@@ -1,7 +1,7 @@
 //! Мемоизирующая реализация
 
-use crate::Matrix;
 use crate::DamerauLevenshtein;
+use crate::Matrix;
 
 /// Кэш найденных расстояний
 type Cache = Matrix<Option<usize>>;
@@ -9,7 +9,6 @@ type Cache = Matrix<Option<usize>>;
 pub struct Memoizing;
 
 impl DamerauLevenshtein for Memoizing {
-
     /// Расстояние Дамерау-Левенштейна
     ///
     /// Примеры:
@@ -46,7 +45,6 @@ impl DamerauLevenshtein for Memoizing {
     /// ```
 
     fn distance(s: &str, t: &str) -> usize {
-
         // Длины данных строк
         let (m, n) = (s.len(), t.len());
 
@@ -59,7 +57,6 @@ impl DamerauLevenshtein for Memoizing {
 
 /// Вспомогательная функция
 fn helper(s: &str, t: &str, cache: &mut Cache) -> usize {
-
     // Длины данных строк
     let (m, n) = (s.len(), t.len());
 
@@ -80,22 +77,18 @@ fn helper(s: &str, t: &str, cache: &mut Cache) -> usize {
     let d = t.chars().nth(n - 1).unwrap();
 
     let mut cases = vec![
-
-        helper(&s[0 .. m - 1], t, cache) + 1,
-        helper(s, &t[0 .. n - 1], cache) + 1,
-
-        helper(&s[0 .. m - 1], &t[0 .. n - 1], cache)
-            + if c == d { 0 } else { 1 }
+        helper(&s[0..m - 1], t, cache) + 1,
+        helper(s, &t[0..n - 1], cache) + 1,
+        helper(&s[0..m - 1], &t[0..n - 1], cache) + if c == d { 0 } else { 1 },
     ];
 
     if m > 1 && n > 1 {
-
         // Предпоследние символы данных строк
         let p = s.chars().nth(m - 2).unwrap();
         let q = t.chars().nth(n - 2).unwrap();
 
         if c == q && p == d {
-            cases.push(helper(&s[0 .. m - 2], &t[0 .. n - 2], cache) + 1);
+            cases.push(helper(&s[0..m - 2], &t[0..n - 2], cache) + 1);
         }
     }
 

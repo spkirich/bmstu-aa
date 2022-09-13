@@ -6,7 +6,6 @@ use crate::VanillaLevenshtein;
 pub struct Iterative;
 
 impl VanillaLevenshtein for Iterative {
-
     /// Расстояние Левенштейна
     ///
     /// Примеры:
@@ -43,16 +42,14 @@ impl VanillaLevenshtein for Iterative {
     /// ```
 
     fn distance(s: &str, t: &str) -> usize {
-
         // Длины данных строк
         let (m, n) = (s.len(), t.len());
 
         // Матрица расстояний Левенштейна
         let mut matrix = Matrix::new(0, m + 1, n + 1);
 
-        for i in 0 .. m + 1 {
-            for j in 0 .. n + 1 {
-
+        for i in 0..m + 1 {
+            for j in 0..n + 1 {
                 if i == 0 {
                     matrix.set(0, j, j);
                     continue;
@@ -68,12 +65,9 @@ impl VanillaLevenshtein for Iterative {
                 let d = t.chars().nth(j - 1).unwrap();
 
                 let cases = [
-
                     matrix.get(i - 1, j) + 1,
                     matrix.get(i, j - 1) + 1,
-
-                    matrix.get(i - 1, j - 1)
-                        + if c == d { 0 } else { 1 }
+                    matrix.get(i - 1, j - 1) + if c == d { 0 } else { 1 },
                 ];
 
                 matrix.set(i, j, *cases.iter().min().unwrap());

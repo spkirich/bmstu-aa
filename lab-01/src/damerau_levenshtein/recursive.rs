@@ -5,7 +5,6 @@ use crate::DamerauLevenshtein;
 pub struct Recursive;
 
 impl DamerauLevenshtein for Recursive {
-
     /// Расстояние Дамерау-Левенштейна
     ///
     /// Примеры:
@@ -43,7 +42,6 @@ impl DamerauLevenshtein for Recursive {
 
     /// Простая рекурсивная реализация
     fn distance(s: &str, t: &str) -> usize {
-
         // Длины данных строк
         let (m, n) = (s.len(), t.len());
 
@@ -60,22 +58,18 @@ impl DamerauLevenshtein for Recursive {
         let d = t.chars().nth(n - 1).unwrap();
 
         let mut cases = vec![
-
-            Self::distance(&s[ .. m - 1], t) + 1,
-            Self::distance(s, &t[ .. n - 1]) + 1,
-
-            Self::distance(&s[ .. m - 1], &t[ .. n - 1])
-                + if c == d { 0 } else { 1 }
+            Self::distance(&s[..m - 1], t) + 1,
+            Self::distance(s, &t[..n - 1]) + 1,
+            Self::distance(&s[..m - 1], &t[..n - 1]) + if c == d { 0 } else { 1 },
         ];
 
         if m > 1 && n > 1 {
-
             // Предпоследние символы данных строк
             let p = s.chars().nth(m - 2).unwrap();
             let q = t.chars().nth(n - 2).unwrap();
 
             if c == q && p == d {
-                cases.push(Self::distance(&s[ .. m - 2], &t[ .. n - 2]) + 1);
+                cases.push(Self::distance(&s[..m - 2], &t[..n - 2]) + 1);
             }
         }
 

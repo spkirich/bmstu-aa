@@ -1,12 +1,11 @@
 //! Итеративная реализация
 
-use crate::Matrix;
 use crate::DamerauLevenshtein;
+use crate::Matrix;
 
 pub struct Iterative;
 
 impl DamerauLevenshtein for Iterative {
-
     /// Расстояние Дамерау-Левенштейна
     ///
     /// Примеры:
@@ -43,16 +42,14 @@ impl DamerauLevenshtein for Iterative {
     /// ```
 
     fn distance(s: &str, t: &str) -> usize {
-
         // Длины данных строк
         let (m, n) = (s.len(), t.len());
 
         // Матрица расстояний Дамерау-Левенштейна
         let mut matrix = Matrix::new(0, m + 1, n + 1);
 
-        for i in 0 .. m + 1 {
-            for j in 0 .. n + 1 {
-
+        for i in 0..m + 1 {
+            for j in 0..n + 1 {
                 if i == 0 {
                     matrix.set(0, j, j);
                     continue;
@@ -68,16 +65,12 @@ impl DamerauLevenshtein for Iterative {
                 let d = t.chars().nth(j - 1).unwrap();
 
                 let mut cases = vec![
-
                     matrix.get(i - 1, j) + 1,
                     matrix.get(i, j - 1) + 1,
-
-                    matrix.get(i - 1, j - 1)
-                        + if c == d { 0 } else { 1 }
+                    matrix.get(i - 1, j - 1) + if c == d { 0 } else { 1 },
                 ];
 
                 if i > 1 && j > 1 {
-
                     // Предыдущие символы данных строк
                     let p = s.chars().nth(i - 2).unwrap();
                     let q = t.chars().nth(j - 2).unwrap();
