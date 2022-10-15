@@ -21,7 +21,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: pdf
-          path: lab-*.pdf
+          path: lab-*/report/lab-*.pdf
 
   release:
     runs-on: ubuntu-latest
