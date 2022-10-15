@@ -15,6 +15,7 @@ jobs:
         with:
           root_file: lab-*/report/lab-*.tex
           glob_root_file: true
+          work_in_root_file_dir: true
 
       - name: Upload the artifacts
         uses: actions/upload-artifact@v3
