@@ -48,9 +48,16 @@
     \item замена одного символа на другой.
 \end{itemize}
 
-Расстояние Левенштейна между строками $\textbf{s}$ и $\textbf{t}$
-длинами $m$ и $n$ соответственно может быть вычислено как
-$d_{\textup{Л}}(m, n)$, где
+Пусть $\textbf{s}$ и $\textbf{t}$ -- строки над некоторым алфавитом
+$V$, причём
+
+$$
+|\textbf{s}| = m, |\textbf{t}| = n.
+$$
+
+Расстояние Левенштейна
+$\Delta_{\textup{Л}}(\textbf{s}, \textbf{t})$ между этими
+строками может быть вычислено как $d_{\textup{Л}}(m, n)$, где
 
 \begin{equation} \label{eq:vl}
     d_{\textup{Л}}(i, j) =
@@ -96,9 +103,10 @@ $$
     \item перестановка двух символов.
 \end{itemize}
 
-Расстояние Дамерау-Левенштейна между строками $\textbf{s}$ и
-$\textbf{t}$ длинами $m$ и $n$ соответственно может быть вычислено
-как $d_{\textup{ДЛ}}(m, n)$, где
+Расстояние Дамерау-Левенштейна
+$\Delta_{\textup{ДЛ}}(\textbf{s}, \textbf{t})$ между строками
+$\textbf{s}$ и $\textbf{t}$ может быть вычислено как
+$d_{\textup{ДЛ}}(m, n)$, где
 
 \begin{equation} \label{eq:dl}
     d_{\textup{ДЛ}}(i, j) =
@@ -195,7 +203,8 @@ $\textbf{t}_1 \textbf{t}_2 ... \textbf{t}_{j - 1}$.
 \begin{figure}
     \centering
     \includegraphics[height=0.8\textheight]{alg-vl-iterative.png}
-    \caption{Схема нерекурсивного алгоритма}
+    \caption{Схема нерекурсивного алгоритма поиска
+        $\Delta_{\textup{Л}}$}
 \end{figure}
 
 \section{Поиск расстояния Дамерау-Левенштейна}
@@ -207,7 +216,12 @@ $\textbf{t}_1 \textbf{t}_2 ... \textbf{t}_{j - 1}$.
 разработан нерекурсивный алгоритм поиска расстояния
 Дамерау-Левенштейна.
 
-TODO: схема алгоритма
+\begin{figure}
+    \centering
+    \includegraphics[height=0.8\textheight]{alg-dl-iterative.png}
+    \caption{Схема нерекурсивного алгоритма поиска
+        $\Delta_{\textup{ДЛ}}$}
+\end{figure}
 
 \subsection{Простой рекурсивный алгоритм}
 
