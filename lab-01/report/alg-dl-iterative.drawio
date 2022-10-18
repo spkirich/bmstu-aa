@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="Ifpsmnqbu2o1SuFbgTzM" name="Страница 1">
-        <mxGraphModel dx="424" dy="751" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" math="0" shadow="0">
+        <mxGraphModel dx="2092" dy="1502" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -201,6 +201,42 @@
                 </mxCell>
                 <mxCell id="63" value="T(i, j):&lt;br&gt;i &amp;gt; 1, j &amp;gt; 1,&lt;br&gt;s[i-1]=t[j-2],&lt;br&gt;s[i-2]=t[j-1]." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" parent="1" vertex="1">
                     <mxGeometry x="140" y="1420" width="160" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="Да" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="780" y="420" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="Нет" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="860" y="340" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="Да" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="780" y="660" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="Нет" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="660" y="620" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="Да" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="860" y="700" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" value="Нет" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="660" y="700" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" value="Да" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="740" y="820" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="Нет" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="540" y="820" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" value="Нет" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="420" y="940" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" value="Да" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="620" y="940" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" value="Да" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="620" y="1460" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" value="Нет" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="420" y="1460" width="40" height="40" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
