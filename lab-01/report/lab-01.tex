@@ -194,16 +194,22 @@ $$
 
 Заполним целочисленную матрицу $D$ размером $(m + 1)(n + 1)$ таким
 образом, что $d_{ij}$ -- расстояние Левенштейна между срезами
-$\textbf{s}_1 \textbf{s}_2 ... \textbf{s}_{i - 1}$ и
-$\textbf{t}_1 \textbf{t}_2 ... \textbf{t}_{j - 1}$.
+$\textbf{s}_1^{i - 1}$ и $\textbf{t}_1^{j - 1}$, где
 
-Это можно сделать с помощью двух вложенных циклов.
+$$
+\textbf{x}_m^n = \textbf{x}_m \textbf{x}_{m + 1} ... \textbf{x}_n.
+$$
+
+Это можно сделать с помощью двух вложенных циклов. В таком случае,
+$\Delta_{\textup{Л}} = d_{ij}$ при $i = m + 1, j = n + 1$. Схема
+этого алгоритма приведена на рисунке \ref{fig:vl-iterative}.
 
 \begin{figure}
     \centering
     \includegraphics[height=0.8\textheight]{alg-vl-iterative.png}
     \caption{Схема нерекурсивного алгоритма поиска
         $\Delta_{\textup{Л}}$}
+    \label{fig:vl-iterative}
 \end{figure}
 
 \section{Поиск расстояния Дамерау-Левенштейна}
@@ -214,11 +220,15 @@ $\textbf{t}_1 \textbf{t}_2 ... \textbf{t}_{j - 1}$.
 разработан нерекурсивный алгоритм поиска расстояния
 Дамерау-Левенштейна.
 
+Cхема этого алгоритма представлена на рисунке
+\ref{fig:dl-iterative}.
+
 \begin{figure}
     \centering
     \includegraphics[height=0.8\textheight]{alg-dl-iterative.png}
     \caption{Схема нерекурсивного алгоритма поиска
         $\Delta_{\textup{ДЛ}}$}
+    \label{fig:dl-iterative}
 \end{figure}
 
 \subsection{Простой рекурсивный алгоритм}
@@ -227,11 +237,15 @@ $\textbf{t}_1 \textbf{t}_2 ... \textbf{t}_{j - 1}$.
 непосредственно по формуле \ref{eq:dl} с помощью рекурсивной
 функции.
 
+Схема этого алгоритма представлена на рисунке
+\ref{fig:dl-recursive}.
+
 \begin{figure}
     \centering
     \includegraphics[height=0.8\textheight]{alg-dl-recursive.png}
     \caption{Схема простого рекурсивного алгоритма поиска
         $\Delta_{\textup{ДЛ}}$}
+    \label{fig:dl-recursive}
 \end{figure}
 
 \subsection{Рекурсивный алгоритм с кэшем}
@@ -239,11 +253,20 @@ $\textbf{t}_1 \textbf{t}_2 ... \textbf{t}_{j - 1}$.
 Главная проблема простого рекурсивного алгоритма поиска расстояния
 Дамерау-Левенштейна в том, что многие значения выражения
 \ref{eq:dl} вычисляются повторно. Очевидным решением является
-введение кэша в виде матрицы, подобной рассмотренной в подразделе
-\ref{design-vl-iterative}, но допускающей <<отсутствие>> значения
-одного или нескольких элементов.
+введение кэша в виде матрицы $C$, подобной рассмотренной в
+подразделе \ref{design-vl-iterative} матрице $D$, но допускающей
+<<отсутствие>> значения одного или нескольких элементов.
 
-TODO: схема алгоритма
+Схема этого алгоритма представлена на рисунке
+\ref{fig:dl-memoizing}.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=0.8\textheight]{alg-dl-memoizing.png}
+    \caption{Схема рекурсивного алгоритма с кэшем поиска
+        $\Delta_{\textup{ДЛ}}$}
+    \label{fig:dl-memoizing}
+\end{figure}
 
 \chapter{Технологическая часть}
 
@@ -261,9 +284,6 @@ TODO: схема алгоритма
 \texttt{cpu-time}, поскольку он предоставляет простой и
 идиоматичный интерфейс.
 
-Для замера требуемой памяти был выбран инструмент Massif,
-поскольку он позволяет выполнять эту задачу с высокой точностью.
-
 \section{Реализации алгоритмов}
 
 \subsection{Поиск расстояния Левенштейна}
@@ -271,7 +291,8 @@ TODO: схема алгоритма
 В ходе работы был реализован нерекурсивный алгоритм поиска
 расстояния Левенштейна на Rust.
 
-\begin{lstlisting}[caption=Реализация нерекурсивного алгоритма]
+\begin{lstlisting}[caption=Реализация нерекурсивного алгоритма
+    поиска $\Delta_{\textup{Л}}$]
 fn distance(s: &str, t: &str) -> usize {
     let (m, n) = (s.len(), t.len());
 
@@ -318,7 +339,8 @@ fn distance(s: &str, t: &str) -> usize {
 Дамерау-Левенштейна на Rust: нерекурсивный, простой рекурсивный и
 рекурсивный с кэшем.
 
-\begin{lstlisting}[caption=Реализация нерекурсивного алгоритма]
+\begin{lstlisting}[caption=Реализация нерекурсивного алгоритма
+    поиска $\Delta_{\textup{ДЛ}}$]
 fn distance(s: &str, t: &str) -> usize {
     let (m, n) = (s.len(), t.len());
 
@@ -374,7 +396,8 @@ fn distance(s: &str, t: &str) -> usize {
 Листинг реализации простого рекурсивного алгоритма демонстрирует
 наглядность такого подхода.
 
-\begin{lstlisting}[caption=Реализация простого рекурсивного алгоритма]
+\begin{lstlisting}[caption=Реализация простого рекурсивного
+    алгоритма поиска $\Delta_{\textup{ДЛ}}$]
 fn distance(s: &str, t: &str) -> usize {
     let (m, n) = (s.len(), t.len());
 
@@ -420,7 +443,8 @@ fn distance(s: &str, t: &str) -> usize {
 Реализация рекурсивного алгоритма с кэшем требует несколько более
 сложной структуры -- необходима вспомогательная функция.
 
-\begin{lstlisting}[caption=Реализация рекурсивного алгоритма с кэшем]
+\begin{lstlisting}[caption=Реализация рекурсивного алгоритма с
+    кэшем поиска $\Delta_{\textup{ДЛ}}$]
 fn distance(s: &str, t: &str) -> usize {
     let (m, n) = (s.len(), t.len());
 
@@ -508,7 +532,8 @@ fn helper(s: &str, t: &str, cache: &mut Cache) -> usize {
     \item строки различаются.
 \end{itemize}
 
-\begin{lstlisting}[caption=Тесты реализаций алгоритмов]
+\begin{lstlisting}[caption=Тесты реализаций алгоритмов поиска
+    $\Delta_{\textup{Л}}$]
 // Both strings are empty
 assert_eq!(distance("", ""), 0);
 
@@ -543,7 +568,8 @@ assert_eq!(distance("heaven", "hell"), 4);
 были выделены тестовые случаи, аналогичные рассмотренным в
 \ref{test-vl}.
 
-\begin{lstlisting}[caption=Тесты реализаций алгоритмов]
+\begin{lstlisting}[caption=Тесты реализаций алгоритмов поиска
+    $\Delta_{\textup{ДЛ}}$]
 // Both strings are empty
 assert_eq!(distance("", ""), 0);
 
@@ -600,15 +626,45 @@ assert_eq!(distance("heaven", "hell"), 4);
 \section{Оценка требуемой памяти}
 
 В ходе работы был оценён объём требуемой для работы реализаций
-памяти.
+памяти. Пусть одно беззнаковое целое число занимает $u$ памяти.
 
-\subsection{Нерекурсивный алгоритм}
+Нерекурсивный алгоритм в худшем случае требует:
 
-TODO
+\begin{itemize}
+    \item $mn \cdot u$ памяти под матрицу;
+    \item $2u$ памяти под счётчики $i$ и $j$;
+    \item $4u$ памяти под случаи $a$, $b$, $c$ и $d$.
+\end{itemize}
+
+Итого: $(mn + 6)u$.
+
+Простой рекурсивный алгоритм в худшем случае каждый вызов требует:
+
+\begin{itemize}
+    \item $4u$ памяти под случаи $a$, $b$, $c$ и $d$.
+\end{itemize}
+
+Стоит отметить, что число его вызовов растёт экспоненциально.
+Итого: $4u \cdot a^{mn}$.
+
+Рекурсивный алгоритм с кэшем требует:
+
+\begin{itemize}
+    \item $mn \cdot u$ памяти под кэш.
+\end{itemize}
+
+Кроме того, каждый вызов он требует:
+
+\begin{itemize}
+    \item $4u$ памяти под случаи $a$, $b$, $c$ и $d$.
+\end{itemize}
+
+Итого: $mn \cdot u + 4u \cdot b^{mn}$.
 
 \section{Выводы}
 
-TODO: выводы
+Самым эффективным алгоритом поиска расстояния Дамерау-Левенштейна
+как по времени, так и по памяти, оказался нерекурсивный алгоритм.
 
 \chapter*{Заключение}
 \addcontentsline{toc}{chapter}{Заключение}
@@ -624,7 +680,9 @@ TODO: выводы
     \item выполнен сравнительный анализ разработанных алгоритмов.
 \end{enumerate}
 
-TODO: выводы
+Был изучен метод динамического программирования на примере
+реализации алгоритмов поиска расстояний Левенштейна и
+Дамерау-Левенштейна.
 
 \chapter*{Список литературы}
 \addcontentsline{toc}{chapter}{Список литературы}
@@ -639,10 +697,6 @@ of spelling errors. / F. J. Damerau // Communications of the ACM.
 
 3. Colomiets, P. CPU Time Measurement Library. / P. Colomiets
 URL: https://crates.io/crates/cpu-time
-(дата обращения: 30.09.2022).
-
-4. Massif: a heap profiler.
-URL: https://valgrind.org/docs/manual/ms-manual.html
 (дата обращения: 30.09.2022).
 
 \end{document}
